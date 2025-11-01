@@ -134,3 +134,91 @@ def simulated_annealing(problem: Problem, initial_temp, cooling_rate, num_iterat
         fitness_history.append(best_fitness_so_far)
 
     return best_tour_so_far, best_fitness_so_far, fitness_history
+
+
+def tabu_search(problem: Problem, num_iterations, tabu_tenure, neighborhood_size, show_process=False):
+    """
+    Runs the Tabu Search algorithm.
+    It explores a neighborhood of solutions at each step and moves to the best
+    one that is not on the tabu list.
+    """
+    distance_matrix = problem.distance_matrix
+    num_cities = distance_matrix.shape[0]
+
+    # 1. Start with a single random solution
+    current_tour = np.random.permutation(num_cities)
+    current_fitness = calculate_fitness(current_tour, distance_matrix)
+    
+    # 2. Initialize best-so-far
+    best_tour_so_far = current_tour.copy()
+    best_fitness_so_far = current_fitness
+    
+    # 3. Initialize Tabu List
+    # This list will store recent solutions as tuples
+    # We use a simple list as a FIFO queue
+    tabu_list = [] 
+    
+    fitness_history = []
+
+    if not show_process:
+        print(f"{problem.name} | Running Tabu Search...")
+
+    # 4. Main loop
+    for i in range(num_iterations):
+        # 5. Generate a neighborhood of candidate solutions
+        neighborhood = []
+        for _ in range(neighborhood_size):
+            neighbor = current_tour.copy()
+            inversion_mutation(neighbor) # Modifies in-place
+            neighborhood.append(neighbor)
+        
+        # 6. Find the best neighbor that is not on the tabu list
+        best_neighbor = None
+        best_neighbor_fitness = float('inf')
+
+        for neighbor in neighborhood:
+            neighbor_tuple = tuple(neighbor) # Use tuple for list/set comparison
+            neighbor_fitness = calculate_fitness(neighbor, distance_matrix)
+
+            is_tabu = neighbor_tuple in tabu_list
+            
+            # Aspiration Criterion:
+            # We will accept a tabu move IF it is a new global best
+            aspiration_met = neighbor_fitness < best_fitness_so_far
+            
+            # We select this neighbor if it's better than our current best *neighbor* AND
+            # (it's not tabu OR it meets the aspiration criterion)
+            if neighbor_fitness < best_neighbor_fitness:
+                if not is_tabu or aspiration_met:
+                    best_neighbor = neighbor
+                    best_neighbor_fitness = neighbor_fitness
+
+        # 7. Check if we found a valid move
+        if best_neighbor is None:
+            # This can happen if all neighbors are tabu and none are new bests
+            # We'll just continue from the same spot, hoping a new tweak finds a non-tabu path
+            fitness_history.append(best_fitness_so_far)
+            continue
+
+        # 8. Move to the best neighbor
+        current_tour = best_neighbor
+        current_fitness = best_neighbor_fitness
+        
+        # 9. Update Tabu List
+        # Add the new tour to the tabu list
+        tabu_list.append(tuple(current_tour))
+        # Enforce the tenure: remove the oldest item if the list is too long
+        if len(tabu_list) > tabu_tenure:
+            tabu_list.pop(0) # Removes the first (oldest) item
+        
+        # 10. Update best-so-far (if needed)
+        if current_fitness < best_fitness_so_far:
+            best_fitness_so_far = current_fitness
+            best_tour_so_far = current_tour.copy()
+            
+            if show_process:
+                print(f"{problem.name} | Iter {i}: New best cost = {best_fitness_so_far:.2f}")
+
+        fitness_history.append(best_fitness_so_far)
+    
+    return best_tour_so_far, best_fitness_so_far, fitness_history
