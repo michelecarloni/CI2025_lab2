@@ -17,6 +17,7 @@ CONSIDERATIONS: The results reported are based on the value of the fitness. The 
 
 
 | PROBLEM | Genetic Algorithm | Simulated Annealing | Tabu Search |
+| --- | --- | --- | --- |
 | g_10 | 1498 | 1498 | 1498 |
 | g_20 | 1756 | 1809 | 1756 |
 | g_50 | 2771 | 2679 | 2722 |
