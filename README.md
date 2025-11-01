@@ -16,25 +16,25 @@ The project contains several algorithms for solving the 'Traveling Salesman Prob
 CONSIDERATIONS: The results reported are based on the value of the fitness. The fitness is basically the sum of the weights of the problem based on the solution. The interpretation is: the lower the weight, the closer 2 cities are. For problems that have negative weights, the more negative the fitness is, the better.
 
 
-| PROBLEM | RESULT |
-| g_10 |  |
-| g_20 |  |
-| g_50 |  |
-| g_100 |  |
-| g_200 |  |
-| g_500 |  |
-| g_1000 |  |
-| r1_10 |  |
-| r1_20 |  |
-| r1_50 |  |
-| r1_100 |  |
-| r1_200 |  |
-| r1_500 |  |
-| r1_1000 |  |
-| r2_10 |  |
-| r2_20 |  |
-| r2_50 |  |
-| r2_100 |  |
-| r2_200 |  |
-| r2_500 |  |
-| r2_1000 |  |
+| PROBLEM | Genetic Algorithm | Simulated Annealing | Tabu Search |
+| g_10 | 1498 | 1498 | 1498 |
+| g_20 | 1756 | 1809 | 1756 |
+| g_50 | 2771 | 2679 | 2722 |
+| g_100 | 4424 | 4760 | 4824 |
+| g_200 | 8913 | 10520 | 8600 |
+| g_500 | 36002 | 36490 | 20347 |
+| g_1000 | 99749 | 95520 | 40955 |
+| r1_10 | 184 | 191 | 184 |
+| r1_20 | 365 | 344 | 337 |
+| r1_50 | 879 | 992 | 674 |
+| r1_100 | 1856 | 1750 | 1331 |
+| r1_200 | 4436 | 5277 | 3975 |
+| r1_500 | 15056 | 18836 | 14162 |
+| r1_1000 | 35404 | 43177 | 34322 |
+| r2_10 | -412 | -333 | -412 |
+| r2_20 | -657 | -600 | -810 |
+| r2_50 | -1642 | -1408 | -1666 |
+| r2_100 | -2934 | -2559 | -2849 |
+| r2_200 | -5935 | -3754 | -4715 |
+| r2_500 | -11269 | -6880 | -8422 |
+| r2_1000 | -17286 | -7970 | -12239 |
