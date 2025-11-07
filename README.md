@@ -10,6 +10,12 @@ The project contains several algorithms for solving the 'Traveling Salesman Prob
 - 2) Simulated Annealing: it is a local search technique. It starts with a single random tour and iteratively tweaks this solution to find a neighbor. If the new solution is better, in terms of fitness, it will be accepted, otherwise a probability define whether the solution should be discarded or accepted (in order to explore somewhere else in the landscape). This probability will be high at the beginning (high exploration) and through many iterations it will be lowered to prefere exploitation than exploration.
 - 3) Tabu Search: Another local search algorithm. it maintains a memory to guide the process of discovering a great solution. The algorithm explores neighbor solutions of the current one for a certain number of steps and it maintains an array of solutions already explored. After this analysis the algorithm jumps to another area of the landscape and repeat the same process.
 
+### File.py Explained
+- **final_solution.py**: main script where all the algorithms are called and tests are done
+- **algorithms.py**: it contains all the algorithms implemented. Each function is an algorithm
+- **Problem.py**: data structure of the problem. Implemented for having a more clear structure to work with.
+- **utils_main.py**: functions for checking the characteristics of a problem.
+- **utils_algo.py**: functions used by the algorithms (mutations, fitness calculation, generating solution...)
 
 ### Results
 
